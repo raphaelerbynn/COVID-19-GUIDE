@@ -24,18 +24,31 @@ import java.util.Iterator;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView totalTextView;
+    TextView casesTextView;
+    TextView deathsTextView;
+    TextView recoveriesTextView;
+    TextView numOfCases;
+    TextView numOfDeaths;
+    TextView numOfRecovered;
+
+    int cases;
+    int deaths;
+    int recovered;
 
     String data = "";
-    String dataParse = "";
-    String singleDataParse = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        totalTextView = findViewById(R.id.totalTextView);
+        casesTextView = findViewById(R.id.caesTextView);
+        deathsTextView = findViewById(R.id.deathsTextView);
+        recoveriesTextView = findViewById(R.id.recoveredTextView);
+        numOfCases = findViewById(R.id.numOfCases);
+        numOfDeaths = findViewById(R.id.numOfDeaths);
+        numOfRecovered = findViewById(R.id.numOfRecoveries);
+
 
         if(internetIsAvailable()){
 
@@ -45,10 +58,10 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
 
-            totalTextView.setText("Total Cases: NO INTERNET CONNECTION\n" +
-                    "Total Deaths: NO INTERNET CONNECTION\n" +
-                    "Total Recoveries: NO INTERNET CONNECTION\n"
-            );
+            numOfCases.setText("...");
+            numOfDeaths.setText("...");
+            numOfRecovered.setText("...");
+
 
         }
 
@@ -116,12 +129,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                singleDataParse = "Cases: " + jsonObject.get("cases") + "\n" +
-                        "Deaths: " + jsonObject.get("deaths") + "\n" +
-                        "Recovered: " + jsonObject.get("recovered") + "\n";
+                cases = (int) jsonObject.get("cases");
+                deaths = (int) jsonObject.get("deaths");
+                recovered = (int) jsonObject.get("recovered");
 
 
-                dataParse += singleDataParse;
+                Log.i("totalNumbers", String.valueOf(cases));
 
 
 
@@ -137,8 +150,10 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            totalTextView.setText(dataParse);
-            Log.i("infos", data);
+            numOfCases.setText(String.valueOf(cases));
+            numOfDeaths.setText(String.valueOf(deaths));
+            numOfRecovered.setText(String.valueOf(recovered));
+
 
         }
     }
