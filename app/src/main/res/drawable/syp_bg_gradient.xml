@@ -7,13 +7,12 @@
         android:angle="0"
         android:centerX="0%"
         android:startColor="#333333"
-        android:centerColor="#333333"
-        android:endColor="#B22DD5"
+        android:centerColor="#B4333333"
+        android:endColor="#D21E88E5"
         android:type="linear"
         />
 
     <size
-        android:width="334dp"
-        android:height="100dp"
+
         />
 </shape>

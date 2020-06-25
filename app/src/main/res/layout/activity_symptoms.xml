@@ -4,6 +4,451 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Symptoms">
+    android:background="@drawable/sym_bg"
+    tools:context=".Symptoms" >
+
+    <TextView
+        android:id="@+id/textView29"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:shadowColor="#251A1A"
+        android:shadowDx="2"
+        android:shadowDy="4"
+        android:shadowRadius="3"
+        android:text="All Symptoms of COVID 19"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:id="@+id/pointsScrollView"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/syp_bg_gradient"
+        android:tag="1"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@id/layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView29">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/difficulty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="3dp"
+                android:layout_marginBottom="10dp"
+                android:onClick="details"
+                android:padding="10dp"
+                android:shadowColor="#050505"
+                android:shadowDx="2"
+                android:shadowDy="5"
+                android:shadowRadius="5"
+                android:text="Difficulty in breathing"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="#F84A4A"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/chest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="3dp"
+                android:layout_marginBottom="10dp"
+                android:onClick="details"
+                android:padding="10dp"
+                android:shadowColor="#050505"
+                android:shadowDx="2"
+                android:shadowDy="5"
+                android:shadowRadius="5"
+                android:tag="2"
+                android:text="Chest pain"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="#F84A4A"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/loss"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="3dp"
+                android:layout_marginBottom="10dp"
+                android:onClick="details"
+                android:padding="10dp"
+                android:shadowColor="#050505"
+                android:shadowDx="2"
+                android:shadowDy="5"
+                android:shadowRadius="5"
+                android:tag="3"
+                android:text="Loss of speech/&#10;movement"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="#F84A4A"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tiredness"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="3dp"
+                android:layout_marginBottom="10dp"
+                android:onClick="details"
+                android:padding="10dp"
+                android:shadowColor="#050505"
+                android:shadowDx="2"
+                android:shadowDy="5"
+                android:shadowRadius="5"
+                android:tag="4"
+                android:text="Tiredness"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="#E88181"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="3dp"
+                android:layout_marginBottom="10dp"
+                android:onClick="details"
+                android:padding="10dp"
+                android:shadowColor="#050505"
+                android:shadowDx="2"
+                android:shadowDy="5"
+                android:shadowRadius="5"
+                android:tag="5"
+                android:text="Dry cough"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="#E88181"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/fever"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="3dp"
+                android:layout_marginBottom="10dp"
+                android:onClick="details"
+                android:padding="10dp"
+                android:shadowColor="#050505"
+                android:shadowDx="2"
+                android:shadowDy="5"
+                android:shadowRadius="5"
+                android:tag="6"
+                android:text="Fever"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="#E88181"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/aches"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="3dp"
+                android:layout_marginBottom="10dp"
+                android:onClick="details"
+                android:padding="8dp"
+                android:shadowColor="#050505"
+                android:shadowDx="2"
+                android:shadowDy="5"
+                android:shadowRadius="5"
+                android:tag="7"
+                android:text="Aches and pains"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="#F1CACA"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/sore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="3dp"
+                android:layout_marginBottom="10dp"
+                android:onClick="details"
+                android:padding="8dp"
+                android:shadowColor="#050505"
+                android:shadowDx="2"
+                android:shadowDy="5"
+                android:shadowRadius="5"
+                android:tag="8"
+                android:text="Sore throat"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="#F1CACA"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/diarrhoea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="3dp"
+                android:layout_marginBottom="10dp"
+                android:onClick="details"
+                android:padding="8dp"
+                android:shadowColor="#050505"
+                android:shadowDx="2"
+                android:shadowDy="5"
+                android:shadowRadius="5"
+                android:tag="9"
+                android:text="Diarrhoea"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="#F1CACA"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/conjunct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="3dp"
+                android:layout_marginBottom="10dp"
+                android:onClick="details"
+                android:padding="8dp"
+                android:shadowColor="#050505"
+                android:shadowDx="2"
+                android:shadowDy="5"
+                android:shadowRadius="5"
+                android:tag="10"
+                android:text="Conjunctivitis"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="#F1CACA"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/headache"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="3dp"
+                android:layout_marginBottom="10dp"
+                android:onClick="details"
+                android:padding="8dp"
+                android:shadowColor="#050505"
+                android:shadowDx="2"
+                android:shadowDy="5"
+                android:shadowRadius="5"
+                android:tag="11"
+                android:text="Headache"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="#F1CACA"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/taste"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="3dp"
+                android:layout_marginBottom="10dp"
+                android:onClick="details"
+                android:padding="8dp"
+                android:shadowColor="#050505"
+                android:shadowDx="2"
+                android:shadowDy="5"
+                android:shadowRadius="5"
+                android:tag="12"
+                android:text="Loss of taste or smell "
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="#F1CACA"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/rash"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="3dp"
+                android:layout_marginBottom="10dp"
+                android:onClick="details"
+                android:padding="8dp"
+                android:shadowColor="#050505"
+                android:shadowDx="2"
+                android:shadowDy="5"
+                android:shadowRadius="5"
+                android:tag="13"
+                android:text="A rash on skin, or  &#10;  discolouration  of  &#10; fingers or toes "
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="#F1CACA"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <ScrollView
+        android:id="@+id/detailsScrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/syp_bg_gradient"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView29">
+
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/detailLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/topic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:text="topic"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_margin="5dp"
+                    android:scaleType="centerCrop" />
+
+                <TextView
+                    android:id="@+id/body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="20dp"
+                    android:gravity="start"
+                    android:text="TextView"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:text="Video"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20dp" />
+
+
+            </LinearLayout>
+
+            <VideoView
+                android:id="@+id/videoView"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@id/detailLayout"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="25dp" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/search_background"
+        android:forceDarkAllowed="false"
+        android:onClick="setBackButton"
+        android:shadowColor="#100909"
+        android:shadowDx="10"
+        android:shadowDy="10"
+        android:shadowRadius="5"
+        android:text="Back"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="#272323"
+        android:theme="@android:style/Widget.Holo.DropDownItem"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="center|fill_horizontal"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/textView33"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:text="Red color :&#10;Serious"
+            android:textColor="#F84A4A" />
+
+        <TextView
+            android:id="@+id/textView34"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:text="Orange : &#10;Most common"
+            android:textColor="#E88181" />
+
+        <TextView
+            android:id="@+id/textView35"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:text="White : &#10;Mild/Less common"
+            android:textColor="#F1CACA" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

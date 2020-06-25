@@ -6,14 +6,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.widget.NestedScrollView;
+import androidx.fragment.app.Fragment;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,93 +30,43 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.Iterator;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     static Intent intent;
 
-    TextView casesTextView;
-    TextView deathsTextView;
-    TextView recoveriesTextView;
-    TextView numOfCases;
-    TextView numOfDeaths;
-    TextView numOfRecovered;
-
     BottomNavigationView bottomNavigationView;
     NestedScrollView nestedScrollView;
-
-
-
-
-    int cases;
-    int deaths;
-    int recovered;
-
-    String data = "";
-
-
-
 
     BottomNavigationView.OnNavigationItemSelectedListener itemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
+            Fragment fragment = null;
+
             switch (item.getItemId()){
                 case R.id.home:
 
-                    if (bottomNavigationView.getSelectedItemId() != R.id.home) {
-
-                        intent = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(intent);
-                    }
+                    fragment = new HomeFragment();
 
                     break;
 
                 case R.id.hotlines:
 
-                    if (bottomNavigationView.getSelectedItemId() != R.id.hotlines) {
+                    fragment = new HotlineFragment();
 
-                        intent = new Intent(getApplicationContext(), Hotlines.class);
-                        startActivity(intent);
+                    break;
 
-                    }
-
-                    return true;
-
-
-                case R.id.search:
-
-                    if (bottomNavigationView.getSelectedItemId() != R.id.search) {
-
-                        intent = new Intent(getApplicationContext(), Search.class);
-                        startActivity(intent);
-
-                    }
-                    return true;
 
                 case R.id.about:
 
-                    if (bottomNavigationView.getSelectedItemId() != R.id.about) {
+                    fragment = new AboutFragment();
 
-                        intent = new Intent(getApplicationContext(), About.class);
-                        startActivity(intent);
-
-                    }
-                    return true;
+                    break;
 
                 default:
                     return false;
@@ -116,7 +74,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 
             }
-            return false;
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+            return true;
 
         }
     };
@@ -129,22 +88,22 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             intent = new Intent(getApplicationContext(), Countries.class);
             startActivity(intent);
         }
-//        if (view.getId() == R.id.countriesCardView){
-//            intent = new Intent(getApplicationContext(), Countries.class);
-//            startActivity(intent);
-//        }
-//        if (view.getId() == R.id.countriesCardView){
-//            intent = new Intent(getApplicationContext(), Countries.class);
-//            startActivity(intent);
-//        }
-//        if (view.getId() == R.id.countriesCardView){
-//            intent = new Intent(getApplicationContext(), Countries.class);
-//            startActivity(intent);
-//        }
-//        if (view.getId() == R.id.countriesCardView){
-//            intent = new Intent(getApplicationContext(), Countries.class);
-//            startActivity(intent);
-//        }
+        else if (view.getId() == R.id.symptomsCardView){
+            intent = new Intent(getApplicationContext(), Symptoms.class);
+            startActivity(intent);
+
+
+        }
+        else if (view.getId() == R.id.precautionCardView){
+            intent = new Intent(getApplicationContext(), Prevention.class);
+            startActivity(intent);
+
+            Log.i("ClickSymptom", "Symptoms clicked" );
+        }
+        else if (view.getId() == R.id.articlesCardView){
+            intent = new Intent(getApplicationContext(), Articles.class);
+            startActivity(intent);
+        }
 //
 
     }
@@ -164,43 +123,19 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 
 
-
-
-        casesTextView = findViewById(R.id.caesTextView);
-        deathsTextView = findViewById(R.id.deathsTextView);
-        recoveriesTextView = findViewById(R.id.recoveredTextView);
-        recoveriesTextView = findViewById(R.id.recoveredTextView);
-        numOfCases = findViewById(R.id.numOfCases);
-        numOfDeaths = findViewById(R.id.numOfDeaths);
-        numOfRecovered = findViewById(R.id.numOfRecoveries);
-
-
-
-
         nestedScrollView = findViewById(R.id.nestedScrollView);
 
 
         bottomNavigationView = findViewById(R.id.buttomNavView);
         bottomNavigationView.setOnNavigationItemSelectedListener(itemSelectedListener);
 
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
 
 
 
 
-        if(internetIsAvailable()){
-
-            DownloadTask downloadTask = new DownloadTask();
-            downloadTask.execute();
-
-        }
-        else {
-
-            numOfCases.setText("...");
-            numOfDeaths.setText("...");
-            numOfRecovered.setText("...");
 
 
-        }
 
 
 //        Log.i("bottomvav", String.valueOf(bottomNavigationView.getHeight()));
@@ -218,34 +153,33 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
 
-    protected boolean internetIsAvailable() {
-
-        boolean have_Wifi = false;
-        boolean have_MobileData = false;
-
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-        assert connectivityManager != null;
-        NetworkInfo[] networkInfos = connectivityManager.getAllNetworkInfo();
-
-        for (NetworkInfo info : networkInfos) {
-
-            if (info.getTypeName().equalsIgnoreCase("WIFI")) {
-                if (info.isConnected()) {
-                    have_Wifi = true;
-                }
-            }
-            if (info.getTypeName().equalsIgnoreCase("MOBILE")) {
-                if (info.isConnected()) {
-                    have_MobileData = true;
-                }
-            }
-
-        }
-
-        return have_Wifi || have_MobileData;
-
-    }
-
+//    protected boolean internetIsAvailable() {
+//
+//        boolean have_Wifi = false;
+//        boolean have_MobileData = false;
+//
+//        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+//        assert connectivityManager != null;
+//        NetworkInfo[] networkInfos = connectivityManager.getAllNetworkInfo();
+//
+//        for (NetworkInfo info : networkInfos) {
+//
+//            if (info.getTypeName().equalsIgnoreCase("WIFI")) {
+//                if (info.isConnected()) {
+//                    have_Wifi = true;
+//                }
+//            }
+//            if (info.getTypeName().equalsIgnoreCase("MOBILE")) {
+//                if (info.isConnected()) {
+//                    have_MobileData = true;
+//                }
+//            }
+//
+//        }
+//
+//        return have_Wifi || have_MobileData;
+//
+//    }
 
 
 
@@ -253,68 +187,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         return false;
     }
-
-
-    class DownloadTask extends AsyncTask<Void, Void, Void> {
-
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-
-            try {
-
-                URL url = new URL("https://coronavirus-19-api.herokuapp.com/all");
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-
-                InputStream inputStream = urlConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
-                String lineData = "";
-
-
-                while (lineData != null) {
-
-                    lineData = bufferedReader.readLine();
-                    data += lineData;
-
-                }
-
-
-
-
-                JSONObject jsonObject = new JSONObject(data);
-
-
-
-                cases = (int) jsonObject.get("cases");
-                deaths = (int) jsonObject.get("deaths");
-                recovered = (int) jsonObject.get("recovered");
-
-
-                Log.i("totalNumbers", String.valueOf(cases));
-
-
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return null;
-        }
-
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-
-            numOfCases.setText(String.valueOf(cases));
-            numOfDeaths.setText(String.valueOf(deaths));
-            numOfRecovered.setText(String.valueOf(recovered));
-
-
-        }
-    }
-
 
 
     class BottomNavBehavior extends CoordinatorLayout.Behavior<BottomNavigationView> {
@@ -351,6 +223,62 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 
 
+    public void alertDialogue(final String number){
 
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.sym_action_call)
+                .setTitle("Call Emergency line")
+                .setMessage("Do you really want to call " + number)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        intent = new Intent(Intent.ACTION_CALL);
+                        intent.setData(Uri.parse("tel:" + number));
+
+                        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
+
+                            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CALL_PHONE}, 0);
+
+                        }
+                        else {
+                            startActivity(intent);
+                        }
+
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
+
+    }
+
+    public void call(View view){
+        int id = view.getId();
+        final String ends700 = (String) HotlineFragment.call700.getText();
+        final String ends004 = (String) HotlineFragment.call004.getText();
+        final String ends005 = (String) HotlineFragment.call005.getText();
+        final String ends868 = (String) HotlineFragment.call868.getText();
+        final String ends311 = (String) HotlineFragment.call311.getText();
+
+        switch (id){
+            case R.id.button700:
+                alertDialogue(ends700);
+                break;
+            case R.id.button004:
+                alertDialogue(ends004);
+                break;
+            case R.id.button005:
+                alertDialogue(ends005);
+                break;
+            case R.id.button868:
+                alertDialogue(ends868);
+                break;
+            case R.id.button311:
+                alertDialogue(ends311);
+                break;
+            default:
+                break;
+        }
+    }
 
 }

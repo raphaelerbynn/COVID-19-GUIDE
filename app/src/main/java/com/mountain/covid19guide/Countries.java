@@ -11,6 +11,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -46,18 +47,10 @@ public class Countries extends AppCompatActivity {
     EditText searchText;
     static ListView listView;
 
-
-
     static MyLisAdapter myLisAdapter;
 
     CountryStat countryStat;
-    ;
     ArrayList<CountryStat> arrayList = new ArrayList<CountryStat>();
-
-//    TextView deaths;
-//    TextView recoveries;
-
-
 
     int numOfCountries = 230;
 
@@ -199,9 +192,6 @@ public class Countries extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-
-
-
             try {
 
                 URL url = new URL("https://coronavirus-19-api.herokuapp.com/countries/");
@@ -219,10 +209,6 @@ public class Countries extends AppCompatActivity {
                     data += lineData;
 
                 }
-
-
-
-
                 JSONArray jsonArray = new JSONArray(data);
 
                 setCountryNumber(jsonArray.length());
@@ -242,83 +228,7 @@ public class Countries extends AppCompatActivity {
                     String active_ = String.valueOf(jsonObject.get("active"));
                     String critical_ = String.valueOf(jsonObject.get("critical"));
 
-//
-//                            Object ntotalCases = jsonObject.get("cases");
-//                    Object ntodayCases = jsonObject.get("todayCases");
-//                    Object ntotalDeaths = jsonObject.get("deaths");
-//                    Object ntodayDeaths = jsonObject.get("todayDeaths");
-//                    Object ntotalRecovered = jsonObject.get("recovered");
-//                    Object nactive_ = jsonObject.get("active");
-//                    Object ncritical_ = jsonObject.get("critical");
-//
-//                    String totalCases = null;
-//                    if (ntotalCases.toString() != null) {
-//                        if (ntotalCases.toString().length() > 3) {
-//                            totalCases = NumberFormat.getNumberInstance(Locale.US).format(ntotalCases.toString());
-//                        } else {
-//                            totalCases = String.valueOf(ntotalCases.toString());
-//                        }
-//                    }
-//
-//
-//                    String todayCases = null;
-//                    if (ntodayCases.toString() != null) {
-//                        if (ntodayCases.toString().length() > 3) {
-//                            todayCases = NumberFormat.getNumberInstance(Locale.US).format(ntodayCases.toString());
-//                        } else {
-//                            todayCases = String.valueOf(ntodayCases.toString());
-//                        }
-//                    }
-//
-//
-//                    String totalDeaths = null;
-//                    if (ntotalDeaths.toString() != null) {
-//                        if (ntotalDeaths.toString().length() > 3) {
-//                            totalDeaths = NumberFormat.getNumberInstance(Locale.US).format(ntotalDeaths.toString());
-//                        } else {
-//                            totalDeaths = String.valueOf(ntotalDeaths.toString());
-//                        }
-//                    }
-//
-//
-//                    String todayDeaths = null;
-//                    if (ntodayDeaths.toString() != null) {
-//                        if (ntodayDeaths.toString().length() > 3) {
-//                            todayDeaths = NumberFormat.getNumberInstance(Locale.US).format(ntodayDeaths.toString());
-//                        } else {
-//                            todayDeaths = String.valueOf(ntodayDeaths.toString());
-//                        }
-//                    }
-//
-//
-//                    String totalRecovered = null;
-//                    if (ntotalRecovered.toString() != null) {
-//                        if (ntotalRecovered.toString().length() > 3) {
-//                            totalRecovered = NumberFormat.getNumberInstance(Locale.US).format(ntotalRecovered.toString());
-//                        } else {
-//                            totalRecovered = String.valueOf(ntotalRecovered.toString());
-//                        }
-//                    }
-//
-//
-//                    String active_ = null;
-//                    if (nactive_.toString() != null) {
-//                        if (nactive_.toString().length() > 3) {
-//                            active_ = NumberFormat.getNumberInstance(Locale.US).format(nactive_.toString());
-//                        } else {
-//                            active_ = String.valueOf(nactive_.toString());
-//                        }
-//                    }
-//
-//
-//                    String critical_ = null;
-//                    if (ncritical_.toString() != null) {
-//                        if (ncritical_.toString().length() > 3) {
-//                            critical_ = NumberFormat.getNumberInstance(Locale.US).format(ncritical_.toString());
-//                        } else {
-//                            critical_ = String.valueOf(ncritical_.toString());
-//                        }
-//                    }
+
                     country_name[i] = countryName;
                     total_cases[i] = totalCases;
                     deaths[i] = totalDeaths;
@@ -331,8 +241,8 @@ public class Countries extends AppCompatActivity {
 
                     countryStat = new CountryStat();
                     countryStat.setCountry_name(country_name[i]);
-                    countryStat.setTotal_cases(total_cases[i]);
-                    countryStat.setDeaths(deaths[i]);
+                    countryStat.setTotal_cases(NumberFormat.getInstance(Locale.US).format(Integer.parseInt(total_cases[i])));
+                    countryStat.setDeaths(NumberFormat.getInstance(Locale.US).format(Integer.parseInt(deaths[i])));
                     countryStat.setRecovered(recovered[i]);
                     countryStat.setToday_cases(today_cases[i]);
                     countryStat.setToday_deaths(today_deaths[i]);
@@ -342,38 +252,12 @@ public class Countries extends AppCompatActivity {
                     countryStat.setCountry_num(i);
 
                     arrayList.add(countryStat);
-
-                    Log.i("hfbfjnfj", String.valueOf(i));
-
-
-
                 }
-
-
-
-
-
-
-
-
-
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
             return null;
-        }
-
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-
-//            itemArrayList.add(country_name);
-
-
-
         }
 
     }
@@ -386,11 +270,7 @@ class MyLisAdapter extends ArrayAdapter<String>{
     private ArrayList<CountryStat> arrayList;
     private ArrayList<CountryStat> privateArray;
 
-
-
-
-
-    public MyLisAdapter(Activity context, ArrayList<CountryStat> arrayList){
+    MyLisAdapter(Activity context, ArrayList<CountryStat> arrayList){
         super(context, R.layout.activity_mylist);
 
         this.context = context;
@@ -399,16 +279,11 @@ class MyLisAdapter extends ArrayAdapter<String>{
         privateArray = new ArrayList<CountryStat>();
         privateArray.addAll(arrayList);
 
-
-
-
     }
 
 
 
     public View getView(int pos, final View view, ViewGroup parent){
-
-
 
         LayoutInflater inflater = context.getLayoutInflater();
         View rowView = inflater.inflate(R.layout.activity_mylist, null, true);
@@ -425,13 +300,8 @@ class MyLisAdapter extends ArrayAdapter<String>{
         final LinearLayout minLinearLayout = rowView.findViewById(R.id.showMoreLayout);
         LinearLayout maxLinearLayout = rowView.findViewById(R.id.countryLayout);
 
-
-
-
         countryNameTextView.setText(arrayList.get(pos).getCountry_num() + ". " + arrayList.get(pos).getCountry_name());
         totalCasesTextView.setText("Total Cases: " + arrayList.get(pos).getTotal_cases());
-
-
 
         deathsTextView.setText("Total Deaths: " + arrayList.get(pos).getDeaths());
         recoveriesTextView.setText("Recovered: " + arrayList.get(pos).getRecovered());
@@ -473,85 +343,85 @@ class MyLisAdapter extends ArrayAdapter<String>{
 
 class CountryStat{
 
-    int country_num;
-    String country_name;
-    String total_cases;
-    String deaths;
-    String recovered;
-    String today_cases;
-    String today_deaths;
-    String activeCondition;
-    String criticalCondition;
+    private int country_num;
+    private String country_name;
+    private String total_cases;
+    private String deaths;
+    private String recovered;
+    private String today_cases;
+    private String today_deaths;
+    private String activeCondition;
+    private String criticalCondition;
 
-    public int getCountry_num() {
+    int getCountry_num() {
         return country_num;
     }
 
-    public void setCountry_num(int country_num) {
+    void setCountry_num(int country_num) {
         this.country_num = country_num;
     }
 
-    public String getCountry_name() {
+    String getCountry_name() {
         return country_name;
     }
 
-    public void setCountry_name(String country_name) {
+    void setCountry_name(String country_name) {
         this.country_name = country_name;
     }
 
-    public String getTotal_cases() {
+    String getTotal_cases() {
         return total_cases;
     }
 
-    public void setTotal_cases(String total_cases) {
+    void setTotal_cases(String total_cases) {
         this.total_cases = total_cases;
     }
 
-    public String getDeaths() {
+    String getDeaths() {
         return deaths;
     }
 
-    public void setDeaths(String deaths) {
+    void setDeaths(String deaths) {
         this.deaths = deaths;
     }
 
-    public String getRecovered() {
+    String getRecovered() {
         return recovered;
     }
 
-    public void setRecovered(String recovered) {
+    void setRecovered(String recovered) {
         this.recovered = recovered;
     }
 
-    public String getToday_cases() {
+    String getToday_cases() {
         return today_cases;
     }
 
-    public void setToday_cases(String today_cases) {
+    void setToday_cases(String today_cases) {
         this.today_cases = today_cases;
     }
 
-    public String getToday_deaths() {
+    String getToday_deaths() {
         return today_deaths;
     }
 
-    public void setToday_deaths(String today_deaths) {
+    void setToday_deaths(String today_deaths) {
         this.today_deaths = today_deaths;
     }
 
-    public String getActiveCondition() {
+    String getActiveCondition() {
         return activeCondition;
     }
 
-    public void setActiveCondition(String activeCondition) {
+    void setActiveCondition(String activeCondition) {
         this.activeCondition = activeCondition;
     }
 
-    public String getCriticalCondition() {
+    String getCriticalCondition() {
         return criticalCondition;
     }
 
-    public void setCriticalCondition(String criticalCondition) {
+    void setCriticalCondition(String criticalCondition) {
         this.criticalCondition = criticalCondition;
     }
 }

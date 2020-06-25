@@ -10,10 +10,6 @@
         android:icon="@android:drawable/ic_menu_call"
         android:title="Hotlines" />
     <item
-        android:id="@+id/search"
-        android:icon="@android:drawable/ic_menu_search"
-        android:title="Search" />
-    <item
         android:id="@+id/about"
         android:icon="@drawable/ic_user"
         android:title="About" />

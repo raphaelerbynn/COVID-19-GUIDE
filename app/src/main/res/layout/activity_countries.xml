@@ -55,7 +55,6 @@
         android:text="countries and thier statistics"
         android:textAllCaps="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textEditNoPasteWindowLayout="@layout/activity_main"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
